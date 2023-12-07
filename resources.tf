@@ -60,3 +60,14 @@ resource "aws_security_group" "remote_access" {
     Name = "${var.project_name}-${var.project_env}-remote_access"
   }
 }
+
+resource "aws_instance" "webserver" {
+  ami                    = var.ami_id
+  instance_type          = var.type
+  key_name               = aws_key_pair.auth_key.key_name
+  user_data              = file("userdata.sh")
+  vpc_security_group_ids = [aws_security_group.frontend_access.id, aws_security_group.remote_access.id]
+  tags = {
+    Name = "${var.project_name}-${var.project_env}-webserver"
+  }
+}
