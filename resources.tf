@@ -79,3 +79,12 @@ resource "aws_instance" "webserver" {
     Name = "${var.project_name}-${var.project_env}-webserver"
   }
 }
+
+resource "aws_route53_record" "hostname" {
+
+  zone_id = data.aws_route53_zone.rootdomain.id
+  name    = "${var.hostname}.${var.domain_name}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.webserver.public_ip]
+}

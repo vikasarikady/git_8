@@ -27,3 +27,13 @@ variable "type" {
   type        = string
   description = "instance type"
 }
+
+variable "domain_name" {
+  type        = string
+  description = "Name of the domain"
+}
+
+variable "hostname" {
+  type        = string
+  description = "Hostname"
+}
