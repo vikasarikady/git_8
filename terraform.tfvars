@@ -1,0 +1,6 @@
+project_name  = "git4"
+project_env   = "prod"
+project_owner = "vikas"
+region        = "ap-south-1"
+ami_id        = "ami-02e94b011299ef128"
+type          = "t2.micro"
