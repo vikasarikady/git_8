@@ -77,7 +77,15 @@ resource "aws_instance" "webserver" {
   vpc_security_group_ids = [aws_security_group.frontend_access.id, aws_security_group.remote_access.id]
   tags = {
     Name = "${var.project_name}-${var.project_env}-webserver"
-  }
+  } 
+}
+
+resource "aws_eip" "webserver" {
+  instance = aws_instance.webserver.id
+  domain   = "vpc"
+  tags = {
+    Name = "${var.project_name}-${var.project_env}-webserver"
+  }         
 }
 
 resource "aws_route53_record" "hostname" {
@@ -86,5 +94,5 @@ resource "aws_route53_record" "hostname" {
   name    = "${var.hostname}.${var.domain_name}"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.webserver.public_ip]
+  records = [aws_eip.webserver.public_ip]
 }
